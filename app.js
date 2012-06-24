@@ -6,7 +6,7 @@ var http = require('http')
 // Define a single-page client
 ss.client.define('main', {
   view: 'app.html',
-  css:  ['libs', 'app.css'],
+  css:  ['base.css'],
   code: ['libs', 'app'],
   tmpl: '*'
 });
