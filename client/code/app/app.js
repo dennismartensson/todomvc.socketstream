@@ -238,34 +238,42 @@ function setListener() {
 
   $(".destroy").on('click', function(event) {
     todo = getTodoOnId(event.target.name);
-    deleteTodo(todo);
+    if(todo !== null){
+      deleteTodo(todo);
+    };
   });
 
   $(".toggle").on('click', function(event) {
     todo = getTodoOnId(event.target.name);
-    toggleCompleted(todo);
+    if(todo !== null){
+      toggleCompleted(todo);
+    };
   });
 
   $('.view').on('dblclick', function(event) {
     todo = getTodoOnId(event.target.title);
-    $('.editing').removeClass('editing');
-    $('#li' + todo.order).addClass('editing');
-    $('#Edit' + todo.order).show().select();
+    if(todo !== null){
+      $('.editing').removeClass('editing');
+      $('#li' + todo.order).addClass('editing');
+      $('#Edit' + todo.order).show().select();
+    };
   });
 
   $(".edit").on('keyup blur', function(event) {
     todo = getTodoOnId(event.target.name);
-    if (event.keyCode == ENTER_KEY || event.type == 'blur') {
+    if(todo !== null){
+      if (event.keyCode == ENTER_KEY || event.type == 'blur') {
 
-      var text = $("#Edit" + todo.order).val().trim();
+        var text = $("#Edit" + todo.order).val().trim();
 
-      var success = exports.update(todo, text);
+        var success = exports.update(todo, text);
 
-      if (success) {
-        return true;
-      } else {
-        deleteTodo(todo);
-        return false;
+        if (success) {
+          return true;
+        } else {
+          deleteTodo(todo);
+          return false;
+        }
       }
     }
   });
@@ -318,7 +326,9 @@ function getIndex(id) {
 function getTodoOnId(id) {
   for (var i = 0; i < todosLocalLength; i++) {
     var todo = todosLocal[i];
-    if (todo.id == id) {
+    if (typeof todo === "undefined") {
+      return null;
+    }else if (todo.id == id) {
       return todo;
     }
   };
